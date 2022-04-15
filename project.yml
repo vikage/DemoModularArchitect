@@ -1,0 +1,77 @@
+---
+name: App
+options:
+  postGenCommand: pod install
+targets:
+  App:
+    dependencies:
+      - target: Core
+      - target: RxSwiftExtensions
+      - target: CommonUI
+      - target: BundleProvider
+      - target: CoreUtils
+    deploymentTarget: '13.0'
+    platform: iOS
+    postBuildScripts:
+      - inputFiles:
+          - ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}
+          - $(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)
+        name: Crashlytics
+        script: ${PODS_ROOT}/FirebaseCrashlytics/run
+    settings:
+      base:
+        CODE_SIGN_STYLE: Automatic
+        DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+        DEVELOPMENT_TEAM: TFAR74HVP6
+        INFOPLIST_FILE: App/Info.plist
+        SWIFT_VERSION: 5
+        TARGETED_DEVICE_FAMILY: 1
+    sources:
+      - path: App
+    type: application
+  BundleProvider:
+    deploymentTarget: '13.0'
+    platform: iOS
+    sources:
+      - createIntermediateGroups: true
+        path: SharedModules/BundleProvider/Sources
+    type: library.static
+  CommonUI:
+    dependencies:
+      - target: CommonUIResources
+      - target: CoreUtils
+      - target: BundleProvider
+    deploymentTarget: '13.0'
+    platform: iOS
+    sources:
+      - createIntermediateGroups: true
+        path: CoreModules/CommonUI/Sources
+    type: library.static
+  CommonUIResources:
+    createIntermediateGroups: true
+    platform: iOS
+    sources:
+      - createIntermediateGroups: true
+        path: CoreModules/CommonUI/Resources
+    type: bundle
+  Core:
+    deploymentTarget: '13.0'
+    platform: iOS
+    sources:
+      - createIntermediateGroups: true
+        path: CoreModules/Core/Sources
+    type: library.static
+  CoreUtils:
+    deploymentTarget: '13.0'
+    platform: iOS
+    sources:
+      - createIntermediateGroups: true
+        path: CoreModules/CoreUtils/Sources
+    type: library.static
+  RxSwiftExtensions:
+    deploymentTarget: '13.0'
+    platform: iOS
+    sources:
+      - createIntermediateGroups: true
+        path: SharedModules/RxSwiftExtensions/Sources
+    type: library.static

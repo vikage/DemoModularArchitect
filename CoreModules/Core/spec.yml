@@ -1,0 +1,8 @@
+targets:
+  Core:
+    deploymentTarget: '13.0'
+    platform: iOS
+    sources:
+      - createIntermediateGroups: true
+        path: Sources
+    type: library.static

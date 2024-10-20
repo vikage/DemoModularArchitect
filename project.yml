@@ -1,4 +1,10 @@
----
+include:
+  - CoreModules/CommonUI/spec.yml
+  - CoreModules/Core/spec.yml
+  - CoreModules/CoreUtils/spec.yml
+  - SharedModules/BundleProvider/spec.yml
+  - SharedModules/RxSwiftExtensions/spec.yml
+
 name: App
 options:
   postGenCommand: pod install
@@ -29,49 +35,3 @@ targets:
     sources:
       - path: App
     type: application
-  BundleProvider:
-    deploymentTarget: '13.0'
-    platform: iOS
-    sources:
-      - createIntermediateGroups: true
-        path: SharedModules/BundleProvider/Sources
-    type: library.static
-  CommonUI:
-    dependencies:
-      - target: CommonUIResources
-      - target: CoreUtils
-      - target: BundleProvider
-    deploymentTarget: '13.0'
-    platform: iOS
-    sources:
-      - createIntermediateGroups: true
-        path: CoreModules/CommonUI/Sources
-    type: library.static
-  CommonUIResources:
-    createIntermediateGroups: true
-    platform: iOS
-    sources:
-      - createIntermediateGroups: true
-        path: CoreModules/CommonUI/Resources
-    type: bundle
-  Core:
-    deploymentTarget: '13.0'
-    platform: iOS
-    sources:
-      - createIntermediateGroups: true
-        path: CoreModules/Core/Sources
-    type: library.static
-  CoreUtils:
-    deploymentTarget: '13.0'
-    platform: iOS
-    sources:
-      - createIntermediateGroups: true
-        path: CoreModules/CoreUtils/Sources
-    type: library.static
-  RxSwiftExtensions:
-    deploymentTarget: '13.0'
-    platform: iOS
-    sources:
-      - createIntermediateGroups: true
-        path: SharedModules/RxSwiftExtensions/Sources
-    type: library.static
